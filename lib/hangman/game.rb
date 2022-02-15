@@ -19,11 +19,17 @@ module Hangman
         char = gets.chomp
         Graphics.clear_screen
 
-        if word.include? char
-          if guess.include? char
+        if char.match(/\W/)
+          puts 'Enter a letter' + Graphics.obfuscate_word(word, guess)
+        elsif char.match(/\d/)
+          puts 'Please enter a letter.' + Graphics.obfuscate_word(word, guess)
+        elsif word.include? char
+          if char.empty?
+            puts 'Enter a letter to play! ' + Graphics.obfuscate_word(word, guess)
+          elsif guess.include? char
             puts "You already entered '#{char}'. Yes, it is still correct.. 🙄"
             puts 'Try again: ' + Graphics.obfuscate_word(word, guess)
-          else
+          else  
             guess << char
             placeholder = Graphics.obfuscate_word(word, guess)
 
