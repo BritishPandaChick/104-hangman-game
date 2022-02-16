@@ -17,16 +17,19 @@ module Hangman
         print "[#{chances - wrong_tries} chances left]: "
 
         char = gets.chomp
+          if char == ''
+            puts "Oops! That's not a letter. Please enter a letter A-Z."
+            next
+          end 
+
+          if !(char =~ /[[:alpha:]]/)
+            puts "Oops! That's not a letter. Please enter a letter A-Z."
+            next 
+          end
         Graphics.clear_screen
 
-        if char.match(/\W/)
-          puts 'Enter a letter' + Graphics.obfuscate_word(word, guess)
-        elsif char.match(/\d/)
-          puts 'Please enter a letter.' + Graphics.obfuscate_word(word, guess)
-        elsif word.include? char
-          if char.empty?
-            puts 'Enter a letter to play! ' + Graphics.obfuscate_word(word, guess)
-          elsif guess.include? char
+        if word.include? char
+          if guess.include? char
             puts "You already entered '#{char}'. Yes, it is still correct.. 🙄"
             puts 'Try again: ' + Graphics.obfuscate_word(word, guess)
           else  
