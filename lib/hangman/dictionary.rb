@@ -1,11 +1,11 @@
 module Hangman
   module Dictionary
-    WORDS = %w{
-      banana avocado apple chocolate froyo peanut
-    }
-
+    WORDS = File.readlines('linuxwords')
     def self.random
-      WORDS.sample
+      word = WORDS.sample
+      if word.split.count < 5
+        word = WORDS.sample.chomp
+      end
     end
   end
 end
