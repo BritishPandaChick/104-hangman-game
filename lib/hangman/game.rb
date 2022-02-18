@@ -6,6 +6,7 @@ module Hangman
       @chances = 5
       @wrong_tries = 0
       @guess = ""
+      @incorrect_guess = []
       @word = Dictionary.random
     end
 
@@ -45,8 +46,10 @@ module Hangman
             break
           end
         else
+
           puts "OH NOES! The word doesn't contain '#{char}'"
           @wrong_tries = @wrong_tries + 1
+          incorrect_guess.push(char)
 
           if wrong_tries == chances
             puts Graphics::DEAD

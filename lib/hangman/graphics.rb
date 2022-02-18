@@ -27,7 +27,7 @@ WIN
       # `clear` => clear screen on mac and linux
       # `cls`   => clear screen in windows cmd
       # if neither is working print 100 blank lines
-      system("clear") || system("cls") || puts("\n" * 100)
+      puts `clear`
     end
 
     def self.obfuscate_word word, guessed
