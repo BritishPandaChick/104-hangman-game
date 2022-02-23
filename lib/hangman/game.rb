@@ -1,12 +1,13 @@
 module Hangman
   class Game
-    attr_reader :chances, :word, :wrong_tries, :guess
+    attr_reader :chances, :word, :wrong_tries, :guess, :incorrect_guess
 
     def initialize
       @chances = 5
       @wrong_tries = 0
       @guess = ""
       @word = Dictionary.random
+      @incorrect_guess = []
     end
 
     def play
@@ -40,11 +41,24 @@ module Hangman
           end
 
           unless placeholder.include? Graphics::OBFUSCATION_CHAR
+            Graphics.clear_screen 
             puts Graphics::ALIVE
+            sleep 1 
+            Graphics.clear_screen 
+            puts Graphics::STAYINALIVE
+            sleep 1 
+            puts Graphics::STILLALIVE
+            sleep 1
+            Graphics.clear_screen
             puts "\n\nWELL DONE!! YOU SURVIVED"
             break
           end
         else
+          if incorrect_guess.include?(char)
+            puts "You already guessed `#{char} - unfortunately it's STILL not correct."
+            puts "Try again: " + Graphics.obfuscate_word(word, guess)
+            next
+          end
 
           puts "OH NOES! The word doesn't contain '#{char}'"
           @wrong_tries = @wrong_tries + 1
@@ -59,6 +73,9 @@ module Hangman
           end
         end
       end
+      rescue Interrupt
+      Graphics.clear_screen 
+      puts "Goodbye, cruel world!"
     end
   end
 end
